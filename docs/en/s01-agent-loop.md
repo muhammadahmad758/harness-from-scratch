@@ -75,6 +75,13 @@ Two details matter more than they look:
   sees exactly that list on every call. Most of what follows in this tutorial
   is about managing what goes into it.
 
+**Fork addition — a `max_rounds` cap.** The loop as introduced above has no
+exit if the model keeps requesting tools forever: every round is another API
+call, so a confused model can loop (and bill) indefinitely. This fork's
+`agent_loop` therefore accepts `max_rounds=20`: it counts its rounds and,
+once the cap is hit, stops and returns a note saying so instead of hanging.
+That is Exercise 1 below, implemented.
+
 ## About `llm.py`
 
 `llm.chat(system, messages, tools)` hides the wire format. The chapters use
