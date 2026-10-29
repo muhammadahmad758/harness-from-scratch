@@ -178,3 +178,14 @@ If this helped you understand how coding agents work, a ⭐ helps others find it
 ## License
 
 [MIT](LICENSE)
+
+## My Changes in This Fork
+
+This is my learning fork of [Sur1ive/harness-from-scratch](https://github.com/Sur1ive/harness-from-scratch) (MIT), kept in full with its original license — full credit to Sur1ive for the original project.
+
+My change implements the s01 chapter's own Exercise 1, a safety limit for the agent loop:
+
+- **`agents/s01_agent_loop.py`** — `agent_loop()` now accepts `max_rounds=20` and counts its rounds. If a model keeps requesting tools forever, the loop stops and returns a clear note instead of looping (and spending API calls) indefinitely.
+- **Docs** — the new cap is explained in both `docs/en/s01-agent-loop.md` and `docs/zh/s01-agent-loop.md`, keeping the two languages in sync as the project requires.
+
+Everything else is the original author's work.
