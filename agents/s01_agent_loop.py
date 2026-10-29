@@ -44,8 +44,20 @@ def run_bash(command):
     return out[:50_000]
 
 
-def agent_loop(messages):
+# -- Fork addition: a max_rounds safety guard (this chapter's Exercise 1).
+# A model that never stops asking for tools would loop - and keep
+# spending API calls - forever. agent_loop therefore counts its rounds
+# and stops with a clear note once the cap is hit.
+
+def agent_loop(messages, max_rounds=20):
+    rounds = 0
     while True:
+        rounds += 1
+        if rounds > max_rounds:  # safety stop: too many tool rounds
+            note = (f"Stopped after {max_rounds} rounds: the model kept "
+                    "asking for tools, so the loop was halted (max_rounds).")
+            show_note(note)
+            return note
         reply = llm.chat(system_prompt(), messages, TOOLS)  # 1. ask the model
         messages.append(reply)
         if not reply["tool_calls"]:  # 2. no tools requested -> done
